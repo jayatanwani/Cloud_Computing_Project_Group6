@@ -1,0 +1,46 @@
+{% extends "cloud_based_file_storage_system/base.html" %}
+
+{% block content %}
+
+<div class="row">
+<div class="col-md-12 mt-lg-4 mt-4">
+  {% if success %}
+  <div class="alert alert-success mb-4">
+    {{ success }}
+  </div>
+  {% elif error %}
+  <div class="alert alert-danger mb-4">
+    {{ error }}
+  </div>
+  {% endif %}
+<div class="row">
+{% for bucket in buckets %}
+  <div class="col-sm-3 col-md-4">
+    <div class="card border-info mb-3" style="max-width: 18rem;">
+      <div class="card-header">{{ bucket.Bucket_name }}</div>
+      <div class="card-body text-info">
+        <p class="card-text">Created on {{bucket.Bucket_Creation_time_stamp}}</p>
+        <div class="row">
+        <div class="col-sm-3  col-md-4 mb-3"><a href="{% url 'addFiles' bucket.id %}" class="btn btn-primary">Add Files</a></div>
+        <div class="col-sm-3  col-md-4 mb-3"><a href="{% url 'viewFiles' bucket.id %}" class="btn btn-info">View Files</a></div>
+        <div class="col-sm-3  col-md-4 mb-3"><a href="{% url 'deleteBucket' bucket.id %}" class="btn btn-danger" onclick="return confirm('Once you delete the folder, your all files would be deleted permanently! Do you still want to delete the folder?');">Delete Folder</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <div class="col-sm-3 col-md-4">
+  <div class="card border-info mb-3" style="max-width: 18rem;">
+  <div class="card-header">Add More Folders</div>
+  <div class="card-body text-info">
+    <p class="card-text">Make your personalised folders for adding files!</p>
+    <a href="{% url 'addBucket' %}" class="btn btn-primary">Add Folder</a>
+  </div>
+  </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

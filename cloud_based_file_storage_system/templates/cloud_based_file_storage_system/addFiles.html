@@ -1,0 +1,41 @@
+{% extends "cloud_based_file_storage_system/base.html" %}
+
+{% block content %}
+
+<div class="row">
+<div class="col-md-12 mt-lg-4 mt-4">
+  {% if success %}
+  <div class="alert alert-success">
+    <script>
+         setTimeout(function(){
+            window.location.href = 'http://127.0.0.1:8000/';
+         }, 5000);
+      </script>
+  {{ success }}
+  {% endif %}
+  </div>
+  <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+          <label for="filename">File Name</label>
+          <input type="text" name="filename" placeholder = "Enter your file name " class="form-control" required>
+      </div>
+      <div class="form-group">
+          <label for="filedescription">File Description</label>
+          <textarea name="filedescription" placeholder = "Enter your file description" class="form-control" ></textarea>
+      </div>
+      <div class="form-group">
+      <input type="file" name="myfile">
+      </div>
+          <button type="submit" class="btn btn-primary">Add file</button>
+    </form>
+
+    {% if uploaded_file_url %}
+      <div class="alert alert-info mt-3">File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></div>
+    {% endif %}
+
+
+</div>
+</div>
+
+{% endblock %}

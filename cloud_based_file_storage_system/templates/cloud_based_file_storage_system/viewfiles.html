@@ -1,0 +1,42 @@
+{% extends "cloud_based_file_storage_system/base.html" %}
+
+{% block content %}
+
+<div class="row">
+<div class="col-md-12 mt-lg-4 mt-4">
+  {% if danger %}
+<div class="alert alert-danger">
+  {{ danger }}
+</div>
+  {% endif %}
+
+<table class="table table-striped table-bordered table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>File Name</th>
+      <th>File Description</th>
+      <th>Timestamp</th>
+      <th>File size (in bytes)</th>
+      <th>Operations</th>
+    </tr>
+  </thead>
+  {% for file in bucket_files %}
+    <tr>
+      <td>{{ file.File_name }}</td>
+      <td>{{ file.File_description }}</td>
+      <td>{{ file.File_Creation_time_stamp }}</td>
+      <td>{{ file.File_size }}</td>
+      <td>
+        <a href="{{ file.File_url }}"> <button type="button" name="button" class="btn btn-primary mb-2">Download file</button> </a>
+        <form action="{% url 'deleteFile' file.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" name="button" class="btn btn-danger">Delete file</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "cloud_based_file_storage_system/base.html" %}
+{% load static %}
+
+{% block content %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <title> Dashboard </title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+	    <!--fontawesome-->
+       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <link rel="stylesheet"  href="{%  static  'css/style.css'  %}">
+  </head>
+
+
+  <body>
+  <div id="wrapper">
+   <div class="overlay"></div>
+
+        <!-- Begin Page Content -->
+        <div class=" px-lg-4">
+
+<div class="row">
+<div class="col-md-12 mt-lg-4 mt-4">
+  {% if success %}
+  <div class="alert alert-success mb-4">
+    {{ success }}
+  </div>
+  {% endif %}
+  {% if buckets %}
+  <div class="row">
+  {% for bucket in buckets %}
+    <div class="col-sm-3 col-md-4">
+      <div class="card border-info mb-3" style="max-width: 18rem;">
+        <div class="card-header">{{ bucket.Bucket_name }}</div>
+        <div class="card-body text-info">
+          <p class="card-text">Created on {{bucket.Bucket_Creation_time_stamp}}</p>
+          <div class="col-sm-3  mb-3"><a href="{% url 'addFiles' bucket.id %}" class="btn btn-primary">Add Files</a></div>
+          <div class="col-sm-3  mb-3"><a href="{% url 'viewFiles' bucket.id %}" class="btn btn-info">View Files</a></div>
+          <div class="col-sm-3  mb-3"><a href="{% url 'deleteBucket' bucket.id %}" class="btn btn-danger" onclick="return confirm('Once you delete the folder, your all files would be deleted permanently! Do you still want to delete the folder?');">Delete Folder</a></div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  <div class="col-sm-3 col-md-4">
+  <div class="card border-info mb-3" style="max-width: 18rem;">
+  <div class="card-header">Add More Folders</div>
+  <div class="card-body text-info">
+    <p class="card-text">Make your personalised folders for adding files!</p>
+    <a href="{% url 'addBucket' %}" class="btn btn-primary">Add Folder</a>
+  </div>
+  </div>
+  </div>
+</div>
+  {% else %}
+    <div class="card border-info mb-3" style="max-width: 18rem;">
+    <div class="card-header">Make Folders</div>
+    <div class="card-body text-info">
+      <p class="card-text">Make your personalised folders for adding files!</p>
+      <a href="{% url 'addBucket' %}" class="btn btn-primary">Add Folder</a>
+    </div>
+  </div>
+  {% endif %}
+
+  </body>
+</html>
+
+{% endblock %}
